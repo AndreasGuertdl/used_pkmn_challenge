@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 
 export function createJsonFile(req, res) {
-    //console.log(req.body);
     const pkmnArray = req.body.pkmnList;
     const path = req.body.path;
     const file = fs.readFileSync(path);

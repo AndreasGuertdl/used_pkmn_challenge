@@ -22,7 +22,7 @@ const cacheMatch = async (request) => {
 
 self.addEventListener('install', (event) => {
     event.waitUntil(addResourcesToCache([
-       
+       //O que botar no cache
     ]))
 })
 
