@@ -1,4 +1,4 @@
-//Para esse json puxo do banco de dados:
+//Exportar Pkmns Usados do Db:
 /* function createJsonFile(pkmnList) {
     if (pkmnList.length == 0) {
         console.log("No data to save to file.");

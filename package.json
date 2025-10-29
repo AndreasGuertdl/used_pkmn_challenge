@@ -13,9 +13,10 @@
   "author": "Andreas Guert",
   "license": "MIT",
   "dependencies": {
+    "@geoapify/request-rate-limiter": "^1.0.1",
+    "bottleneck": "^2.19.5",
     "express": "^5.1.0",
     "path": "^0.12.7",
-    "pokedex-promise-v2": "^4.2.1",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
