@@ -5,8 +5,6 @@ const limiter = new Bottleneck({
     minTime: 333
 })
 
-const firstGenUrl = [];
-
 async function getData(url) {
     return fetch(url);
 }
@@ -14,6 +12,7 @@ async function getData(url) {
 const wrapedGetData = limiter.wrap(getData);
 
 export async function getFirstGenData(req, res) {
+    const firstGenUrl = [];
     const limit = 5;
 
     for (let i = 1; i <= limit; i++) {
@@ -47,8 +46,8 @@ export async function getFirstGenData(req, res) {
                 sprite: sprite,
                 types: types
             }
-            
-            return new Promise((resolve)=>{
+
+            return new Promise((resolve) => {
                 resolve(pokemonFullData);
             })
         })

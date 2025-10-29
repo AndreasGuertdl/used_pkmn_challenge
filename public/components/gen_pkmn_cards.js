@@ -17,7 +17,7 @@ window.onload = function () {
                 newCard.appendChild(pkmnName);
 
                 if(pkmn.types.length == 1){
-                    const type = document.createTextNode(type);
+                    const type = document.createTextNode(pkmn.types[0].type.name);
                     newCard.appendChild(type);
                 }else{
                     const firstType = document.createTextNode(pkmn.types[0].type.name);
@@ -27,7 +27,6 @@ window.onload = function () {
                 }
 
                 cardsSection.appendChild(newCard);
-                //document.body.insertBefore(newCard, cardsSection);
             })
         })
     })
