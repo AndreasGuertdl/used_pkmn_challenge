@@ -1,0 +1,71 @@
+#pkmnCards {
+  display: grid;
+  grid-template-columns: repeat(5, 320px);
+
+  row-gap: 10px;
+
+  margin: 20px;
+  padding: 10px;
+  /* Alinha horizontalmente */
+  justify-content: space-between;
+
+  /* Alinha verticalmente */
+  align-items: center;
+
+  /*Nao funciona aqui:
+  float:left;            
+  display: inline-block; */
+}
+
+#newCard {
+  display: grid;
+  grid-template-columns: repeat(4, 20%);
+  grid-template-rows: auto; /* Rows size based on content */
+  gap: 10px;
+
+  margin: 3%;
+  /* padding: 10px; 
+  padding-left: none; */
+
+  background-color: #f0e5d2;
+
+  border: 1px dashed black;
+  border-radius: 1.25rem;
+  border-top: 0.5rem solid darkgoldenrod;
+  /* border-bottom-left-radius: 50px; */
+}
+
+#pkmn_sprite {
+  margin-top: -35px;
+  margin-left: -20px;
+
+  min-width: 90px;
+  min-height: 90px;
+
+  background-color: whitesmoke;
+}
+
+#dex_number {
+  font-weight: bold;
+  font-size: larger;
+  display: inline-block;
+}
+
+#pkmn_name {
+  font-size: larger;
+  display: inline-block;
+}
+
+#first_type {
+  grid-column: 2/3;
+}
+
+#second_type {
+  grid-column: 3/3;
+}
+
+#check_box{
+    grid-column: 4/4;
+    margin-bottom: 5px;
+    min-height: 20px;
+}

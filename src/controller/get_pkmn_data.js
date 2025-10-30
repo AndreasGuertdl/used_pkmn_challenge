@@ -1,8 +1,9 @@
 import Bottleneck from "bottleneck";
 
+//Puxar 151 esta demorando 17,05 - 16,95 segundos
 const limiter = new Bottleneck({
     maxConcurrent: 1,
-    minTime: 333
+    minTime: 111
 })
 
 async function getData(url) {
@@ -13,7 +14,7 @@ const wrapedGetData = limiter.wrap(getData);
 
 export async function getFirstGenData(req, res) {
     const firstGenUrl = [];
-    const limit = 5;
+    const limit = 10;
 
     for (let i = 1; i <= limit; i++) {
         const id = i.toString();
@@ -53,6 +54,8 @@ export async function getFirstGenData(req, res) {
         })
 
         Promise.all(promises).then((results) => {
+            //Demora esta aqui:
+            //console.log(results);
             res.json(results);
         })
     } catch (err) {
