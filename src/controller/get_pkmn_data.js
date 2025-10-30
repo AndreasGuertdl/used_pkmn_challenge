@@ -14,9 +14,10 @@ const wrapedGetData = limiter.wrap(getData);
 
 export async function getFirstGenData(req, res) {
     const firstGenUrl = [];
-    const limit = 10;
+    const offset = 1;
+    const limit = 20;
 
-    for (let i = 1; i <= limit; i++) {
+    for (let i = offset; i <= limit; i++) {
         const id = i.toString();
         const url = `https://pokeapi.co/api/v2/pokemon/${id}`
         firstGenUrl.push(url);
