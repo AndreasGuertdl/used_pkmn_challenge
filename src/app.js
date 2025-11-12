@@ -1,4 +1,4 @@
-import { createTable, insertPokemon, selectPokemon } from './controller/used_pokemon.js';
+import { createTable } from './controller/used_pokemon.js';
 import express from 'express';
 import path from 'path';
 import router from './routes.js';

@@ -2,6 +2,7 @@ class PkmnCard {
     firstGen = [];
     secondGen = [];
     thirdGen = [];
+    currentListener = null;
 
     constructor() {
         console.log("\nClasse PkmnCard criada.\n");
@@ -9,40 +10,84 @@ class PkmnCard {
 
     async getFirstGen() {
         const response = await fetch('/first_gen');
+
         this.firstGen = await response.json();
+
+        return this.firstGen;
+    }
+
+    async isInDb(id) {
+        const response = await fetch(`/pokemon/${id}`);
+        const dbResult = await response.json();
+
+        return "id" in dbResult;
     }
 
     getAllUsedPkmn() {
 
     }
 
-    addUsedPkmn(checkBoxId) {
-        const requestedPkmn = this.firstGen[checkBoxId];
+    addUsedPkmn(id) {
+        const pkmnData = this.firstGen[id];
+        const pkmnId = pkmnData.pokedex_number;
+        const pkmnName = pkmnData.pkname;
+        const game = document.getElementById("game").value;
+        const runNumber = document.getElementById("runNumber").value;
+        const used_in = document.getElementById("runDate").value;
+
+        const data = { pkmnId, pkmnName, game, runNumber, used_in };
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        };
+
+        try {
+            fetch('/pokemon', options);
+
+            const iconId = `${pkmnId}`;
+            const icon = document.getElementById(iconId);
+
+            icon.classList.remove("not_used");
+            icon.classList.add("used");
+        } catch (err) {
+            alert(err);
+        }
+    }
+
+    renderPopup(id) {
+        const requestedPkmn = this.firstGen[id];
+
         const pkmnId = requestedPkmn.pokedex_number;
-        const pkmnName = requestedPkmn.pkname;
+        const formatedDexNumber = pkmnId.toString().padStart(3, '0');
+
+        const pkName = requestedPkmn.pkname;
+        const formatedPkmnName = pkName.charAt(0).toUpperCase() + pkName.slice(1);
+
+        const paragraph = document.getElementById("requested_pkmn");
+        paragraph.innerHTML = "No" + formatedDexNumber + " " + formatedPkmnName;
+        paragraph.style.fontWeight = 'bold';
 
         const popup = document.getElementById("popup");
 
         const sendButton = document.getElementById("sendPkmn");
         
-        sendButton.addEventListener("click", () => {
-            const game = document.getElementById("game").value;
-            const runNumber = document.getElementById("runNumber").value;
-            const used_in = document.getElementById("runDate").value;
+        //Esta porcao do codigo abaixo eh a solucao para que o eventlistener para 'addUsedPkmn' so seja chamada 1 vez por button press
+        if(this.currentListener){
+            sendButton.removeEventListener("click", this.currentListener);
+        }
 
-            const data = { pkmnId, pkmnName, game, runNumber, used_in };
-            console.log(data);
-            //pokemon.id, pokemon.name, pokemon.game, pokemon.run, pokemon.used_in
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            };
+        const newListener = () =>{
+            this.addUsedPkmn(pkmnId - 1);
+            popup.classList.remove("open");
+        }
 
-            fetch('/pokemon', options);
-        });
+        sendButton.addEventListener("click", newListener);
+
+        this.currentListener = newListener;
 
         const closeButton = document.getElementById("closePopup");
         closeButton.addEventListener("click", () => {
@@ -60,7 +105,7 @@ class PkmnCard {
 
         const cardsSection = document.getElementById("pkmnCards");
 
-        generation.forEach(pkmn => {
+        generation.map(async (pkmn) => {
             const newCard = document.createElement("span");
             newCard.id = "newCard";
 
@@ -69,48 +114,34 @@ class PkmnCard {
             pkmnId.appendChild(document.createTextNode("No" + formatedDexNumber));
             pkmnId.id = "dex_number";
 
-            const pkmnName = document.createElement("h6");
-            const pkName = pkmn.pkname;
-            const formatedPkmnName = pkName.charAt(0).toUpperCase() + pkName.slice(1);
-            pkmnName.appendChild(document.createTextNode(formatedPkmnName));
-            pkmnName.id = "pkmn_name";
-
             const pkmnIcon = new Image;
             pkmnIcon.src = pkmn.sprite;
-            pkmnIcon.id = "pkmn_sprite";
-
-            pkmnIcon.className = "img-fluid rounded-circle border border-dark border-3";
-            //Width has to be defined here for some reason:
+            pkmnIcon.className = "pkmn_sprite";
+            pkmnIcon.setAttribute('id', `${pkmn.pokedex_number}`);
             pkmnIcon.style = "width: 90px";
 
-            newCard.appendChild(pkmnIcon);
+            /* pkmnIcon.addEventListener('click', () => {
+                this.renderPopup(pkmnIcon.id - 1);
+            }); */
+
             newCard.appendChild(pkmnId);
-            newCard.appendChild(pkmnName);
-
-            const firstType = document.createElement("h6");
-            firstType.id = "first_type";
-            firstType.appendChild(document.createTextNode(pkmn.types[0].type.name))
-            newCard.appendChild(firstType);
-            if (pkmn.types.length == 2) {
-                const secondType = document.createElement("h6");
-                secondType.id = "second_type";
-                secondType.appendChild(document.createTextNode(pkmn.types[1].type.name));
-                newCard.appendChild(secondType);
-            }
-
-            const checkBox = document.createElement("input");
-            checkBox.id = `${pkmn.pokedex_number - 1}`;
-            checkBox.className = "check_box";
-            checkBox.type = "checkbox";
-
-            //Need to pass an anonymous function to click events when calling a function with params:
-            checkBox.addEventListener('click', () => {
-                this.addUsedPkmn(checkBox.id);
-            });
-
-            newCard.appendChild(checkBox);
-
+            newCard.appendChild(pkmnIcon);
             cardsSection.appendChild(newCard);
+
+            const inDb = await this.isInDb(pkmn.pokedex_number);
+            if (inDb) {
+                pkmnIcon.classList.add("used");
+            } else {
+                pkmnIcon.classList.add("not_used");
+            }
+        })
+
+        cardsSection.addEventListener("click", (event) => {
+            const clickedPkmnIcon = event.target.id;
+
+            const pkmnId = generation[clickedPkmnIcon].pokedex_number
+
+            this.renderPopup(pkmnId - 2);
         })
     }
 }
@@ -122,3 +153,5 @@ window.onload = function () {
         pkmnCard.renderGenCard(pkmnCard.firstGen);
     });
 };
+
+

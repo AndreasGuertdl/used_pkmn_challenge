@@ -1,4 +1,4 @@
-import { createTable, insertPokemon, selectPokemon } from './controller/used_pokemon.js';
+import { createTable, insertPokemon, selectAllPokemon, selectPokemon } from './controller/used_pokemon.js';
 import { createJsonFile } from './controller/export_pkmn.js';
 import { getFirstGenData } from './controller/get_pkmn_data.js';
 import { Router } from 'express';
@@ -8,7 +8,8 @@ createTable();
 
 //GET
 router.get('/first_gen', getFirstGenData);
-router.get('/pokemon', selectPokemon);
+router.get('/all_pokemon', selectAllPokemon);
+router.get('/pokemon/:id', selectPokemon);
 
 //POST
 router.post('/pokemon', insertPokemon);

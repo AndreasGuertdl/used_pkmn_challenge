@@ -18,11 +18,29 @@
     <div id="pkmnCards"></div>
 
     <div class="popup" id="popup">
-      <div class="inner_popup">
-        <p>Oiiiiii</p>
-        <input type="text" class="game" id="game" />
+      <div class="inner_popup" id="inner_popup">
+        <p id="requested_pkmn"></p>
+        <p>In what game did you use this Pokemon?</p>
+        <input type="text" class="game" id="game" list="games"/>
+        <datalist id="games">
+          <option>Red</option>
+          <option>Blue</option>
+          <option>Yellow</option>
+          <option>Gold</option>
+          <option>Silver</option>
+          <option>Crystal</option>
+          <option>Ruby</option>
+          <option>Sapphire</option>
+          <option>Emerald</option>
+          <option>FireRed</option>
+          <option>LeafGreen</option>
+          <option>HeartGold</option>
+          <option>SoulSilver</option>          
+        </datalist>
+        <p>Was it your first run of this game? Second?</p>
         <input type="number" class="runNumber" id="runNumber" />
-        <input type="date" class="runDate" id="runDate">
+        <p>When did you beat the game?</p>
+        <input type="date" class="runDate" id="runDate" />
         <button id="sendPkmn">Add Pkmn!</button>
         <button id="closePopup">Nevermind!</button>
       </div>

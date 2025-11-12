@@ -15,7 +15,7 @@ const wrapedGetData = limiter.wrap(getData);
 export async function getFirstGenData(req, res) {
     const firstGenUrl = [];
     const offset = 1;
-    const limit = 4;
+    const limit = 151;
 
     for (let i = offset; i <= limit; i++) {
         const id = i.toString();
