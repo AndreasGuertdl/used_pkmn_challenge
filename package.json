@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@geoapify/request-rate-limiter": "^1.0.1",
+    "bootstrap": "^5.3.8",
     "bottleneck": "^2.19.5",
     "express": "^5.1.0",
     "path": "^0.12.7",

@@ -1,0 +1,120 @@
+body {
+  background-color: #fff; /* White paper background */
+  background-image: linear-gradient(
+    to bottom,
+    #ccc 1px,
+    transparent 1px
+  ); /* Horizontal lines */
+  background-size: 100% 25px, 25px 100%; /* Adjust line spacing and vertical line width */
+  background-position: 0 0, 25px 0; /* Position the vertical line */
+}
+
+#pkmnCards {
+  display: grid;
+  grid-template-columns: repeat(9, 11%);
+  column-gap: 1px;
+  row-gap: 10px;
+
+  margin: 20px;
+  padding: 10px;
+  /* Alinha horizontalmente */
+  justify-content: space-between;
+
+  /* Alinha verticalmente */
+  align-items: center;
+
+  /*Nao funciona aqui:
+  float:left;            
+  display: inline-block; */
+}
+
+#newCard {
+  display: grid;
+  grid-template-columns: repeat(1, 20%);
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+
+  row-gap: 30px;
+  justify-self: center;
+  /* padding-bottom: 10px; */
+
+  overflow: hidden;
+  min-width: 0;
+
+  /* background-color: #f0e5d2; */
+  background-color: #fff;
+  border: 1px dashed black;
+  /* border-radius: 1.25rem;
+  border-top: 0.5rem solid darkgoldenrod; */
+  /* border-bottom-left-radius: 50px; */
+}
+
+.pkmn_sprite {
+  margin-top: -35px;
+  margin-left: -20px;
+
+  padding-left: 25px;
+
+  min-width: 190px;
+  min-height: 180px;
+  background: transparent;
+}
+
+#dex_number {
+  justify-self: center;
+  font-weight: bold;
+  font-size: larger;
+  display: inline-block;
+}
+
+#pkmn_name {
+  font-size: larger;
+  display: inline-block;
+}
+
+input {
+  margin-top:-10px;
+  display: block;
+}
+
+button{
+  margin-top:15px;
+}
+
+.popup {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(54, 49, 52, 0.5);
+}
+
+.inner_popup {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0;
+  padding: 15px;
+  text-align: center;
+  width: 380px;
+}
+
+.popup.open {
+  opacity: 1;
+  z-index: 999;
+}
+
+.pkmn_sprite.not_used {
+  opacity: 0.35;
+}
+
+.pkmn_sprite.used {
+  opacity: 1;
+}
