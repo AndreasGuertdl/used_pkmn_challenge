@@ -13,7 +13,29 @@
     <title>Test</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <div class="navbar fixed-top navbar-light bg-light" id="upperBar">
+      <input
+        type="button"
+        value="Register Full Team"
+        class="full_team_btn"
+        id="full_team_btn"
+      />
+    </div>
+
+    <div class="gen_selection_div">
+      <input
+        type="button"
+        class="gen_selection"
+        id="second_gen"
+        value="Johto Dex"
+      />
+      <input
+        type="button"
+        class="gen_selection"
+        id="third_gen"
+        value="Hoenn Dex"
+      />
+    </div>
 
     <div id="pkmnCards"></div>
 
@@ -21,7 +43,7 @@
       <div class="inner_popup" id="inner_popup">
         <p id="requested_pkmn"></p>
         <p>In what game did you use this Pokemon?</p>
-        <input type="text" class="game" id="game" list="games"/>
+        <input type="text" class="game" id="game" list="games" />
         <datalist id="games">
           <option>Red</option>
           <option>Blue</option>
@@ -35,7 +57,7 @@
           <option>FireRed</option>
           <option>LeafGreen</option>
           <option>HeartGold</option>
-          <option>SoulSilver</option>          
+          <option>SoulSilver</option>
         </datalist>
         <p>Was it your first run of this game? Second?</p>
         <input type="number" class="runNumber" id="runNumber" />
@@ -46,8 +68,103 @@
       </div>
     </div>
 
+    <div class="full_team_popup" id="full_team_popup">
+      <div class="full_team_inner_popup" id="full_team_inner_popup">
+        <div id="full_team_selection" class="full_team_selection">
+          <p>Insert your team:</p>
+          <fieldset>
+            <button
+              type="button"
+              id="1"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              id="2"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              id="3"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              id="4"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              id="5"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              id="6"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-outline-primary btn-square-md"
+              data-mdb-ripple-color="dark"
+            >
+              +
+            </button>
+          </fieldset>
+        </div>
+        <p>In what game did you use this Team?</p>
+        <input type="text" class="game" id="game" list="games" />
+        <datalist id="games">
+          <option>Red</option>
+          <option>Blue</option>
+          <option>Yellow</option>
+          <option>Gold</option>
+          <option>Silver</option>
+          <option>Crystal</option>
+          <option>Ruby</option>
+          <option>Sapphire</option>
+          <option>Emerald</option>
+          <option>FireRed</option>
+          <option>LeafGreen</option>
+          <option>HeartGold</option>
+          <option>SoulSilver</option>
+        </datalist>
+        <p>Was it your first run of this game? Second?</p>
+        <input type="number" class="runNumber" id="runNumber" />
+        <p>When did you beat the game?</p>
+        <input type="date" class="runDate" id="runDate" />
+        <button id="sendPkmnFullTeam">Add Team!</button>
+        <button id="closePopupFullTeam">Nevermind!</button>
+      </div>
+    </div>
+
     <!-- <script src="components/sw_config.js"></script> -->
-    <script src="components/gen_pkmn_cards.js"></script>
+    <script type="module" src="components/add_full_team.js"></script>
+    <script type="module" src="components/gen_kanto_cards.js"></script>
+
     <!--Bootstrap Scripts-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

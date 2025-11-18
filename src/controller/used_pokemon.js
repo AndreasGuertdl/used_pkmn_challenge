@@ -30,7 +30,7 @@ export async function selectPokemon(request, response) {
         const db = await openDb();
         const row = await db.get('SELECT * FROM Used_Pokemon WHERE id=?', [pokemonId]);
         if (!row) {
-            return response.status(404).json({ error: 'Pkmn not found' });
+            return response.status(404).json({ error: 'Pokemon not found' });
         }
         return response.json(row);
     } catch (err) {

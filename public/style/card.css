@@ -1,12 +1,23 @@
-body {
-  background-color: #fff; /* White paper background */
+/* body {
+  background-color: #5b9aad;
   background-image: linear-gradient(
     to bottom,
-    #ccc 1px,
+    #152c92 1px,
     transparent 1px
-  ); /* Horizontal lines */
-  background-size: 100% 25px, 25px 100%; /* Adjust line spacing and vertical line width */
-  background-position: 0 0, 25px 0; /* Position the vertical line */
+  );
+  background-size: 100% 25px, 25px 100%;
+  background-position: 0 0, 25px 0;
+} */
+
+body {
+ background-image: url("../images/kanto.jpg");
+ background-color: #ddd8d8;
+ background-blend-mode:soft-light;
+}
+
+#upperBar{
+  padding-top:20px;
+  position:sticky;
 }
 
 #pkmnCards {
@@ -73,15 +84,31 @@ body {
 }
 
 input {
-  margin-top:-10px;
+  margin-top: -10px;
   display: block;
 }
 
-button{
-  margin-top:15px;
+button {
+  margin-top: 15px;
 }
 
 .popup {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(54, 49, 52, 0.5);
+}
+
+.full_team_popup {
   opacity: 0;
   position: fixed;
   top: 0;
@@ -106,7 +133,21 @@ button{
   width: 380px;
 }
 
+.full_team_inner_popup {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0;
+  padding: 15px;
+  text-align: center;
+  width: 380px;
+}
+
 .popup.open {
+  opacity: 1;
+  z-index: 999;
+}
+
+.full_team_popup.open {
   opacity: 1;
   z-index: 999;
 }
@@ -117,4 +158,21 @@ button{
 
 .pkmn_sprite.used {
   opacity: 1;
+}
+
+.gen_selection {
+  display: inline-block;
+  margin: 15px;
+
+  background-color: aliceblue;
+}
+
+.btn-square-md {
+  width: 100px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  height: 100px !important;
+  text-align: center;
+  padding: 0px;
+  font-size: 12px;
 }

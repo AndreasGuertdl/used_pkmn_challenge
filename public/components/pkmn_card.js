@@ -1,34 +1,24 @@
-class PkmnCard {
-    firstGen = [];
-    secondGen = [];
-    thirdGen = [];
-    currentListener = null;
+export class PkmnCard {
+    currentGen = [];
 
-    constructor() {
-        console.log("\nClasse PkmnCard criada.\n");
-    }
+    async getCurrentGen(url) {
+        const response = await fetch(url);
 
-    async getFirstGen() {
-        const response = await fetch('/first_gen');
+        this.currentGen = await response.json();
 
-        this.firstGen = await response.json();
-
-        return this.firstGen;
+        return this.currentGen;
     }
 
     async isInDb(id) {
         const response = await fetch(`/pokemon/${id}`);
+
         const dbResult = await response.json();
 
         return "id" in dbResult;
     }
 
-    getAllUsedPkmn() {
-
-    }
-
     addUsedPkmn(id) {
-        const pkmnData = this.firstGen[id];
+        const pkmnData = this.currentGen[id];
         const pkmnId = pkmnData.pokedex_number;
         const pkmnName = pkmnData.pkname;
         const game = document.getElementById("game").value;
@@ -53,19 +43,23 @@ class PkmnCard {
 
             icon.classList.remove("not_used");
             icon.classList.add("used");
+
+            alert(pkmnName + " Adicionado com sucesso!");
         } catch (err) {
             alert(err);
         }
     }
 
     renderPopup(id) {
-        const requestedPkmn = this.firstGen[id];
+        const requestedPkmn = this.currentGen[id];
 
         const pkmnId = requestedPkmn.pokedex_number;
         const formatedDexNumber = pkmnId.toString().padStart(3, '0');
 
         const pkName = requestedPkmn.pkname;
         const formatedPkmnName = pkName.charAt(0).toUpperCase() + pkName.slice(1);
+        //console.log("\nID passado para renderPopup: " + id);
+        //console.log("\nRendering popup for pokemon:" + pkmnId + pkName);
 
         const paragraph = document.getElementById("requested_pkmn");
         paragraph.innerHTML = "No" + formatedDexNumber + " " + formatedPkmnName;
@@ -74,14 +68,13 @@ class PkmnCard {
         const popup = document.getElementById("popup");
 
         const sendButton = document.getElementById("sendPkmn");
-        
+
         //Esta porcao do codigo abaixo eh a solucao para que o eventlistener para 'addUsedPkmn' so seja chamada 1 vez por button press
-        if(this.currentListener){
+        if (this.currentListener) {
             sendButton.removeEventListener("click", this.currentListener);
         }
-
-        const newListener = () =>{
-            this.addUsedPkmn(pkmnId - 1);
+        const newListener = () => {
+            this.addUsedPkmn(id);
             popup.classList.remove("open");
         }
 
@@ -97,15 +90,10 @@ class PkmnCard {
         popup.classList.add("open");
     }
 
-    renderGenCard(generation) {
-        if (!(Array.isArray(generation) && generation.length > 0)) {
-            console.log("\nArray não populado corretamente\n");
-            return;
-        }
-
+    renderGenCard() {
         const cardsSection = document.getElementById("pkmnCards");
 
-        generation.map(async (pkmn) => {
+        this.currentGen.map(async (pkmn) => {
             const newCard = document.createElement("span");
             newCard.id = "newCard";
 
@@ -135,23 +123,5 @@ class PkmnCard {
                 pkmnIcon.classList.add("not_used");
             }
         })
-
-        cardsSection.addEventListener("click", (event) => {
-            const clickedPkmnIcon = event.target.id;
-
-            const pkmnId = generation[clickedPkmnIcon].pokedex_number
-
-            this.renderPopup(pkmnId - 2);
-        })
     }
 }
-
-const pkmnCard = new PkmnCard();
-
-window.onload = function () {
-    pkmnCard.getFirstGen().then(() => {
-        pkmnCard.renderGenCard(pkmnCard.firstGen);
-    });
-};
-
-
