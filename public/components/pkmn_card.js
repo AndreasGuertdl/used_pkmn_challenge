@@ -77,10 +77,9 @@ export class PkmnCard {
             this.addUsedPkmn(id);
             popup.classList.remove("open");
         }
-
         sendButton.addEventListener("click", newListener);
-
         this.currentListener = newListener;
+        //
 
         const closeButton = document.getElementById("closePopup");
         closeButton.addEventListener("click", () => {
@@ -107,10 +106,6 @@ export class PkmnCard {
             pkmnIcon.className = "pkmn_sprite";
             pkmnIcon.setAttribute('id', `${pkmn.pokedex_number}`);
             pkmnIcon.style = "width: 90px";
-
-            /* pkmnIcon.addEventListener('click', () => {
-                this.renderPopup(pkmnIcon.id - 1);
-            }); */
 
             newCard.appendChild(pkmnId);
             newCard.appendChild(pkmnIcon);
